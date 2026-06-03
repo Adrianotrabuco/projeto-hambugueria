@@ -1,7 +1,7 @@
 import { ProductProps } from "@/utils/data/products";
 
-import { productCartProps } from "../cart-store";
-import { add, remove } from "./cart-in-memory";
+import { productCartProps } from "@/stores/cart-store";
+import { add, remove } from "@/stores/helpers/cart-in-memory";
 
 const product: ProductProps = {
   id: "1",

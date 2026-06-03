@@ -1,4 +1,4 @@
-import { formatCurrency } from "./format-currency";
+import { formatCurrency } from "@/utils/functions/format-currency";
 
 describe("formatCurrency", () => {
   it("deve formatar um valor em reais", () => {
