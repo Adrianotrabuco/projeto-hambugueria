@@ -14,7 +14,7 @@ import { createOrder } from "@/services/orders";
 import { productCartProps, useCartStore } from "@/stores/cart-store";
 import { formatCurrency } from "@/utils/functions/format-currency";
 
-const PHONE_NUMBER = "5519988414402";
+const PHONE_NUMBER = "5519997418514";
 
 export default function Cart() {
   const [address, setAddress] = useState("");
