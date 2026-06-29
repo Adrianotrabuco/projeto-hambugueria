@@ -1,0 +1,100 @@
+import { useState } from "react";
+import {
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Link } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import colors from "tailwindcss/colors";
+
+import { Button } from "@/components/button";
+import { supabase } from "@/lib/supabase";
+
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleLogin() {
+    if (!email.trim() || !password.trim()) {
+      return Alert.alert("Atenção", "Informe e-mail e senha para entrar.");
+    }
+
+    try {
+      setIsLoading(true);
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+
+      if (error) {
+        return Alert.alert("Erro ao entrar", error.message);
+      }
+    } catch {
+      Alert.alert("Erro ao entrar", "Não foi possível fazer login.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      className="flex-1 bg-slate-900 px-6 justify-center"
+    >
+      <Image
+        source={require("@/assets/logo.png")}
+        className="h-8 w-44 mb-10 self-center"
+      />
+
+      <Text className="text-white text-2xl font-heading mb-2">Entrar</Text>
+      <Text className="text-slate-400 font-body mb-8">
+        Acesse sua conta para fazer pedidos.
+      </Text>
+
+      <View className="gap-4">
+        <TextInput
+          className="h-12 bg-slate-800 rounded-md px-4 font-body text-white"
+          placeholder="E-mail"
+          placeholderTextColor={colors.slate[400]}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+
+        <TextInput
+          className="h-12 bg-slate-800 rounded-md px-4 font-body text-white"
+          placeholder="Senha"
+          placeholderTextColor={colors.slate[400]}
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          onSubmitEditing={handleLogin}
+        />
+
+        <Button onPress={handleLogin} disabled={isLoading}>
+          <Button.Text>{isLoading ? "Entrando..." : "Entrar"}</Button.Text>
+          <Button.Icon>
+            <Feather name="log-in" size={20} />
+          </Button.Icon>
+        </Button>
+      </View>
+
+      <Link href={"/signup" as never} asChild>
+        <TouchableOpacity className="mt-8 self-center">
+          <Text className="text-lime-400 font-subtitle">
+            Criar minha conta
+          </Text>
+        </TouchableOpacity>
+      </Link>
+    </KeyboardAvoidingView>
+  );
+}

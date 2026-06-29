@@ -17,7 +17,7 @@ function Button({ children, ...rest }: ButtonProps) {
   return (
     <TouchableOpacity
       className={
-        "5-12 bg-lime-400 rounded-md items-center justify-center flex-row"
+        "h-12 bg-lime-400 rounded-md items-center justify-center flex-row"
       }
       activeOpacity={0.7}
       {...rest}
