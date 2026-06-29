@@ -15,6 +15,7 @@ import colors from "tailwindcss/colors";
 
 import { Button } from "@/components/button";
 import { supabase } from "@/lib/supabase";
+import { getAuthErrorMessage } from "@/utils/functions/auth-error-message";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -44,7 +45,10 @@ export default function Signup() {
       });
 
       if (error) {
-        return Alert.alert("Erro ao cadastrar", error.message);
+        return Alert.alert(
+          "Erro ao cadastrar",
+          getAuthErrorMessage(error.message)
+        );
       }
 
       if (!data.session) {

@@ -15,6 +15,7 @@ import colors from "tailwindcss/colors";
 
 import { Button } from "@/components/button";
 import { supabase } from "@/lib/supabase";
+import { getAuthErrorMessage } from "@/utils/functions/auth-error-message";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -35,7 +36,7 @@ export default function Login() {
       });
 
       if (error) {
-        return Alert.alert("Erro ao entrar", error.message);
+        return Alert.alert("Erro ao entrar", getAuthErrorMessage(error.message));
       }
     } catch {
       Alert.alert("Erro ao entrar", "Não foi possível fazer login.");
